@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Free, fun and easy daily TOEFL practice: vocabulary cards, complete the words, build a sentence and speaking practice for the 2026 TOEFL iBT.">
+<title>TOEFL Buddy</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: one calm card per screen — soft lavender ground, navy ink, coral + mint accents, airy spacing */
+:root{
+  --bg:#F5F3FB; --card:#FFFFFF; --ink:#1F2547; --muted:#6E7396; --line:#E6E3F2;
+  --coral:#FF7A8A; --coral-soft:#FFE8EC; --mint:#2EB896; --mint-soft:#DDF6EE;
+  --lav:#7C6CF2; --lav-soft:#ECE9FF; --sun-soft:#FFF3D6; --sun:#E8A92E;
+  --good:#1E9E78; --bad:#E04B5A;
+  --display:"Outfit","Avenir Next","Segoe UI",sans-serif;
+  --body:"Plus Jakarta Sans","Segoe UI",system-ui,sans-serif;
+  --r:24px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#15172B; --card:#1F2240; --ink:#EEF0FF; --muted:#A3A8CC; --line:#30345A;
+  --coral:#FF8E9C; --coral-soft:#3A2438; --mint:#45D2AE; --mint-soft:#1C3A3A;
+  --lav:#9D91FF; --lav-soft:#2A2A55; --sun-soft:#3A3122; --sun:#F2BF55;
+  --good:#45D2AE; --bad:#FF7480; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#15172B; --card:#1F2240; --ink:#EEF0FF; --muted:#A3A8CC; --line:#30345A;
+  --coral:#FF8E9C; --coral-soft:#3A2438; --mint:#45D2AE; --mint-soft:#1C3A3A;
+  --lav:#9D91FF; --lav-soft:#2A2A55; --sun-soft:#3A3122; --sun:#F2BF55;
+  --good:#45D2AE; --bad:#FF7480; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 40px}
+.app{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+h1,h2{font-family:var(--display);margin:0;text-wrap:balance;letter-spacing:-.01em}
+p{margin:0}
+
+/* header */
+header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,var(--coral),var(--lav));display:grid;place-items:center;color:#fff;font-family:var(--display);font-weight:700;font-size:20px}
+h1{font-size:22px;font-weight:700}
+.sub{font-size:13px;color:var(--muted)}
+.stats{display:flex;gap:6px}
+.chip{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-weight:600;font-size:13px;font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* nav */
+nav{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:5px}
+nav button{border:none;background:transparent;color:var(--muted);font:600 12px var(--body);border-radius:13px;padding:8px 2px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px}
+nav button span{font-size:18px;line-height:1}
+nav button[aria-selected="true"]{background:var(--lav-soft);color:var(--lav)}
+
+/* cards */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:28px 24px;display:flex;flex-direction:column;gap:18px;min-width:0;box-shadow:0 10px 30px -18px rgba(31,37,71,.25)}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--lav)}
+h2{font-size:24px;font-weight:600}
+.muted{color:var(--muted)}
+.view{display:flex;flex-direction:column;gap:20px}
+
+/* home tiles */
+.tiles2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile-go{border:none;border-radius:20px;padding:18px 16px;text-align:left;cursor:pointer;font:inherit;color:var(--ink);display:flex;flex-direction:column;gap:6px;transition:transform .15s}
+.tile-go:hover{transform:translateY(-2px)}
+.tile-go .ic{font-size:26px}
+.tile-go b{font-family:var(--display);font-size:17px;font-weight:600}
+.tile-go small{color:var(--muted);font-size:13px;line-height:1.4}
+.c1{background:var(--lav-soft)} .c2{background:var(--coral-soft)} .c3{background:var(--mint-soft)} .c4{background:var(--sun-soft)}
+.tip{background:var(--bg);border-radius:16px;padding:14px 16px;font-size:15px}
+
+/* about */
+.about{display:flex;gap:16px;align-items:center}
+.avatar{flex:0 0 56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--mint),var(--lav));display:grid;place-items:center;color:#fff;font-family:var(--display);font-weight:700;font-size:20px}
+.about div{min-width:0}
+.about b{font-family:var(--display);font-size:17px;font-weight:600}
+
+/* buttons */
+.btn{font:600 15px var(--body);border:none;border-radius:14px;padding:12px 18px;cursor:pointer;background:var(--lav);color:#fff;transition:transform .1s,opacity .2s;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.btn:active{transform:scale(.97)}
+.btn.soft{background:var(--lav-soft);color:var(--lav)}
+.btn.ghost{background:transparent;color:var(--muted);border:1px solid var(--line)}
+.btn.li{background:#0A66C2;color:#fff}
+button:focus-visible,input:focus-visible,a:focus-visible,.flash:focus-visible{outline:3px solid var(--coral);outline-offset:2px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.row .grow{margin-left:auto}
+
+/* words */
+.progress{display:flex;align-items:center;gap:12px;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.bar{flex:1;height:8px;background:var(--line);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--coral),var(--lav));border-radius:99px;transition:width .3s}
+.flash{min-height:200px;border-radius:20px;background:linear-gradient(160deg,var(--lav-soft),var(--coral-soft));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:24px;cursor:pointer;user-select:none}
+.word{font-family:var(--display);font-size:clamp(34px,9vw,44px);font-weight:600;line-height:1.1}
+.mean{font-family:var(--display);font-size:22px;font-weight:500}
+.hint{font-size:13px;color:var(--muted)}
+
+/* exercises */
+.sentence{font-size:20px;line-height:1.9}
+.sentence input{font:inherit;font-weight:700;color:var(--lav);border:none;border-bottom:2px solid var(--lav);background:transparent;padding:0 2px;border-radius:0}
+.fb{font-weight:600;min-height:1.6em;font-size:15px}
+.fb.ok{color:var(--good)} .fb.no{color:var(--bad)}
+.tiles{display:flex;flex-wrap:wrap;gap:8px;min-height:50px;align-content:flex-start}
+.answer{background:var(--bg);border-radius:16px;padding:10px}
+.tile{font:600 16px var(--body);border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:7px 13px;cursor:pointer}
+.answer .tile{background:var(--lav);color:#fff;border-color:transparent}
+.split{height:1px;background:var(--line)}
+.timer{font-family:var(--display);font-size:36px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--coral);min-width:3ch}
+.recipe{background:var(--mint-soft);border-radius:14px;padding:12px 14px;font-size:14px}
+
+/* guide */
+.parts{display:flex;flex-direction:column;gap:10px}
+.part{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:start;padding:14px;border-radius:16px;background:var(--bg)}
+.part .ic{font-size:22px}
+.part b{font-family:var(--display);font-weight:600;font-size:16px}
+.part small{display:block;color:var(--muted);font-size:13px;line-height:1.45}
+.part .time{font-size:13px;font-weight:600;color:var(--lav);white-space:nowrap;font-variant-numeric:tabular-nums}
+
+footer{text-align:center;color:var(--muted);font-size:13px;display:flex;flex-direction:column;gap:4px}
+footer a{color:var(--lav);font-weight:600;text-decoration:none}
+
+.pop{animation:pop .35s ease}
+@keyframes pop{50%{transform:scale(1.03)}}
+@media (prefers-reduced-motion:reduce){.pop{animation:none}.bar i,.tile-go{transition:none}}
+@media (max-width:420px){.card{padding:22px 18px}.sub{display:none}nav button{font-size:11px}}
+</style>
+</head>
+<body>
+
+<div class="app">
+<header>
+  <div class="brand"><div class="logo">T</div><div><h1>TOEFL Buddy</h1><div class="sub">15 calm minutes a day</div></div></div>
+  <div class="stats"><span class="chip" id="xp">⭐ 0</span><span class="chip" id="streak">🔥 0</span></div>
+</header>
+
+<nav role="tablist" id="nav" aria-label="Sections">
+  <button data-tab="home" aria-selected="true"><span>🏠</span>Home</button>
+  <button data-tab="words"><span>📚</span>Words</button>
+  <button data-tab="fill"><span>✏️</span>Fill</button>
+  <button data-tab="build"><span>🧩</span>Build</button>
+  <button data-tab="speak"><span>🎤</span>Speak</button>
+  <button data-tab="guide"><span>🗺️</span>Guide</button>
+</nav>
+
+<!-- HOME -->
+<section id="home" class="view">
+  <div class="card">
+    <div class="eyebrow">Today's plan</div>
+    <h2>Four tiny games. That's it.</h2>
+    <div class="tiles2">
+      <button class="tile-go c1" data-go="words"><span class="ic">📚</span><b>Learn words</b><small>5 cards · 3 min</small></button>
+      <button class="tile-go c2" data-go="fill"><span class="ic">✏️</span><b>Fill letters</b><small>Reading · 4 min</small></button>
+      <button class="tile-go c3" data-go="build"><span class="ic">🧩</span><b>Build sentences</b><small>Writing · 4 min</small></button>
+      <button class="tile-go c4" data-go="speak"><span class="ic">🎤</span><b>Speak aloud</b><small>Speaking · 4 min</small></button>
+    </div>
+    <p class="tip">💡 <span id="tip"></span></p>
+  </div>
+  <div class="card">
+    <div class="about">
+      <div class="avatar">HF</div>
+      <div><b>Made by Dr. Syeda Hiba Fatima</b><p class="muted" style="font-size:14px">Pharmacist who loves building simple, useful tools.</p></div>
+    </div>
+    <a class="btn li" href="https://www.linkedin.com/in/dr-syeda-hiba-fatima-rph-amrsb-534a42309/" target="_blank" rel="noopener" style="align-self:flex-start">in&nbsp; Connect on LinkedIn</a>
+  </div>
+</section>
+
+<!-- WORDS -->
+<section id="words" class="view" hidden>
+  <div class="card">
+    <div class="eyebrow">Vocabulary</div>
+    <div class="progress"><div class="bar"><i id="wbar" style="width:0"></i></div><span id="wcount"></span></div>
+    <div class="flash" id="flash" tabindex="0" role="button" aria-live="polite"></div>
+    <div class="row">
+      <button class="btn ghost" id="wprev" aria-label="Previous word">←</button>
+      <button class="btn soft" id="wsay">🔊 Listen</button>
+      <button class="btn grow" id="wknow">I know it ✓</button>
+    </div>
+  </div>
+</section>
+
+<!-- FILL -->
+<section id="fill" class="view" hidden>
+  <div class="card">
+    <div class="eyebrow">Reading · Complete the words</div>
+    <p class="muted">Type the missing end of the word.</p>
+    <div class="sentence" id="fsent"></div>
+    <div class="fb" id="ffb" aria-live="polite"></div>
+    <div class="row">
+      <button class="btn" id="fcheck">Check</button>
+      <button class="btn ghost" id="fhint">Hint</button>
+      <button class="btn soft grow" id="fnext">Next →</button>
+    </div>
+  </div>
+</section>
+
+<!-- BUILD -->
+<section id="build" class="view" hidden>
+  <div class="card">
+    <div class="eyebrow">Writing · Build a sentence</div>
+    <p class="muted" id="bq"></p>
+    <div class="tiles answer" id="bans" aria-label="Your sentence"></div>
+    <div class="tiles" id="bpool"></div>
+    <div class="fb" id="bfb" aria-live="polite"></div>
+    <div class="row">
+      <button class="btn" id="bcheck">Check</button>
+      <button class="btn ghost" id="breset">Clear</button>
+      <button class="btn soft grow" id="bnext">Next →</button>
+    </div>
+  </div>
+</section>
+
+<!-- SPEAK -->
+<section id="speak" class="view" hidden>
+  <div class="card">
+    <div class="eyebrow">Speaking · Listen and repeat</div>
+    <p class="sentence" id="rtext"></p>
+    <div class="row">
+      <button class="btn" id="rplay">🔊 Listen</button>
+      <button class="btn ghost" id="rshow">Hide text</button>
+      <button class="btn soft grow" id="rnext">Said it! →</button>
+    </div>
+    <div class="split"></div>
+    <div class="eyebrow">Speaking · Interview</div>
+    <p class="sentence" id="iq" style="font-weight:600"></p>
+    <div class="row">
+      <span class="timer" id="itime">0:45</span>
+      <button class="btn" id="istart">Start</button>
+      <button class="btn soft grow" id="inext">New question</button>
+    </div>
+    <p class="recipe">Easy recipe: <b>“I think…</b> because… <b>For example…”</b></p>
+  </div>
+</section>
+
+<!-- GUIDE -->
+<section id="guide" class="view" hidden>
+  <div class="card">
+    <div class="eyebrow">The new TOEFL (from Jan 2026)</div>
+    <h2>About 2 hours. Scored 1 to 6.</h2>
+    <div class="parts">
+      <div class="part"><span class="ic">📖</span><div><b>Reading</b><small>Complete the words · Daily-life texts · Academic passage</small></div><span class="time">30 min</span></div>
+      <div class="part"><span class="ic">🎧</span><div><b>Listening</b><small>Choose a response · Conversations · Announcements · Talks</small></div><span class="time">29 min</span></div>
+      <div class="part"><span class="ic">✍️</span><div><b>Writing</b><small>Build a sentence · Write an email · Academic discussion</small></div><span class="time">23 min</span></div>
+      <div class="part"><span class="ic">🎤</span><div><b>Speaking</b><small>Listen and repeat · Take an interview</small></div><span class="time">8 min</span></div>
+    </div>
+    <p class="muted" style="font-size:14px">Reading and Listening adapt to your level. Check the official ETS website before your test date.</p>
+  </div>
+</section>
+
+<footer>
+  <span>Made with 💜 by Hiba Fatima</span>
+  <a href="https://www.linkedin.com/in/dr-syeda-hiba-fatima-rph-amrsb-534a42309/" target="_blank" rel="noopener">LinkedIn</a>
+</footer>
+</div>
+
+<script>
+/* ---------- storage (safe if blocked) ---------- */
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+let S=store.get("toeflbuddy",{xp:0,streak:0,last:""});
+function today(){return new Date().toISOString().slice(0,10)}
+function addXP(n){
+  const t=today();
+  if(S.last!==t){const y=new Date(Date.now()-864e5).toISOString().slice(0,10);S.streak=S.last===y?S.streak+1:1;S.last=t}
+  S.xp+=n;store.set("toeflbuddy",S);drawStats();
+}
+function $(s){return document.querySelector(s)}
+function drawStats(){$("#xp").textContent=`⭐ ${S.xp} XP`;$("#streak").textContent=`🔥 ${S.streak}`}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function say(t){try{if(!("speechSynthesis" in window))return false;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="en-US";u.rate=.9;speechSynthesis.speak(u);return true}catch(e){return false}}
+
+/* ---------- tabs ---------- */
+const tabs=["home","words","fill","build","speak","guide"];
+function show(id){tabs.forEach(t=>{$("#"+t).hidden=t!==id});document.querySelectorAll("#nav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===id));window.scrollTo({top:0})}
+document.querySelectorAll("#nav button").forEach(b=>b.onclick=()=>show(b.dataset.tab));
+document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>show(b.dataset.go));
+
+/* ---------- tip of the day ---------- */
+const tips=["Read one short English news story each morning and pick 3 new words.","In writing, short clear sentences beat long confusing ones.","When speaking, a small pause is fine. Just keep going!","Watch a 5-minute English video with subtitles, then without.","Learn words in groups: increase, rise and grow all mean going up.","Email task: greeting, reason, details, polite ending.","Sleep well before the test. A fresh brain reads faster."];
+$("#tip").textContent=tips[new Date().getDay()];
+
+/* ---------- WORDS ---------- */
+const W=[["analyze","to study something carefully","Scientists analyze the data before they share results."],["significant","important or large","There was a significant increase in prices."],["evidence","facts that show something is true","The study gives strong evidence for the idea."],["approach","a way of doing something","Her approach to learning is very creative."],["require","to need","The course requires two essays."],["consequence","a result, often a bad one","Pollution is a consequence of heavy traffic."],["benefit","a good effect","Exercise has many health benefits."],["assume","to think something is true without proof","Don't assume the test is easy."],["interpret","to explain the meaning of","Students interpret the graph in groups."],["maintain","to keep something the same","It is hard to maintain focus for hours."],["decline","to go down; or to say no","The number of birds began to decline."],["enhance","to make better","Music can enhance your mood."],["crucial","extremely important","Sleep is crucial for memory."],["diverse","very different from each other","The campus has a diverse community."],["emerge","to appear or come out","New problems emerged during the project."],["sufficient","enough","We have sufficient time to finish."],["contribute","to give or help","Everyone contributed ideas to the plan."],["rely","to depend on","Many people rely on public transport."],["obtain","to get","You can obtain a library card online."],["previous","coming before","The previous lecture was about plants."]];
+let wi=0,wFlip=false;
+function drawWord(){
+  const [w,m,e]=W[wi];
+  $("#flash").innerHTML=wFlip
+    ? `<div class="mean">${m}</div><div class="muted">“${e}”</div><div class="hint">tap to flip back</div>`
+    : `<div class="word">${w}</div><div class="hint">tap to see the meaning</div>`;
+  $("#flash").classList.remove("pop");void $("#flash").offsetWidth;$("#flash").classList.add("pop");
+  $("#wcount").textContent=`${wi+1} / ${W.length}`;$("#wbar").style.width=((wi+1)/W.length*100)+"%";
+}
+$("#flash").onclick=()=>{wFlip=!wFlip;drawWord()};
+$("#flash").onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();wFlip=!wFlip;drawWord()}};
+$("#wknow").onclick=()=>{addXP(5);wi=(wi+1)%W.length;wFlip=false;drawWord()};
+$("#wprev").onclick=()=>{wi=(wi-1+W.length)%W.length;wFlip=false;drawWord()};
+$("#wsay").onclick=()=>say(W[wi][0]+". "+W[wi][2]);
+drawWord();
+
+/* ---------- FILL ---------- */
+const F=[["Most students study in the","library","before exams."],["Please send me an","email","when you arrive."],["The professor explained the","experiment","step by step."],["Plants need water and","sunlight","to grow."],["The cafeteria closes early on","weekends","."],["She wrote a short","summary","of the article."],["Climate change affects many","animals","around the world."],["We need more","information","before we decide."],["The museum offers free","tickets","to students."],["He was late because of heavy","traffic","this morning."],["The results of the","survey","were surprising."],["Good sleep improves your","memory","and focus."]];
+let fi=0,fOrder=shuffle(F.map((_,i)=>i));
+const fCut=w=>Math.ceil(w.length/2);
+function drawFill(){
+  const [a,w,b]=F[fOrder[fi]],k=fCut(w);
+  $("#fsent").innerHTML=`${a} <b>${w.slice(0,k)}</b><input id="finput" aria-label="missing letters" autocomplete="off" autocapitalize="off" spellcheck="false" style="width:${w.length-k+2}ch">${b==="."?"":" "}${b}`;
+  $("#ffb").textContent="";$("#ffb").className="fb";
+  $("#finput").onkeydown=e=>{if(e.key==="Enter")fCheck()};
+}
+function fCheck(){
+  const [,w]=F[fOrder[fi]],need=w.slice(fCut(w)),got=$("#finput").value.trim().toLowerCase();
+  if(got===need){$("#ffb").textContent="🎉 Correct! +10 XP";$("#ffb").className="fb ok";addXP(10)}
+  else{$("#ffb").textContent="Not yet. Try again or tap Hint.";$("#ffb").className="fb no"}
+}
+$("#fcheck").onclick=fCheck;
+$("#fhint").onclick=()=>{$("#ffb").textContent=`The full word is: ${F[fOrder[fi]][1]}`;$("#ffb").className="fb"};
+$("#fnext").onclick=()=>{fi=(fi+1)%F.length;if(fi===0)fOrder=shuffle(fOrder);drawFill()};
+drawFill();
+
+/* ---------- BUILD ---------- */
+const B=[["Your friend asks about the library.","The library opens at nine in the morning."],["You ask a classmate for help.","Could you help me with my homework?"],["A professor talks about the exam.","The exam will cover chapters one to five."],["You explain why you were late.","I missed the bus this morning."],["Your roommate asks about dinner.","Do you want to eat pizza tonight?"],["You talk about your weekend.","I visited my grandparents on Saturday."],["A notice about the gym.","The gym is closed for cleaning today."],["You give your opinion.","I think online classes are very useful."],["You ask about a deadline.","When is the essay due this week?"],["You describe your study habit.","I usually study in the evening."]];
+let bi=0,bAns=[],bPool=[];
+function drawBuild(){
+  const [q,s]=B[bi],words=s.split(" ");
+  let p;do{p=shuffle(words)}while(p.join(" ")===s&&words.length>2);
+  bPool=p.map((w,i)=>({w,id:i}));bAns=[];
+  $("#bq").textContent=q+" Tap the words in order.";
+  $("#bfb").textContent="";$("#bfb").className="fb";renderTiles();
+}
+function renderTiles(){
+  const mk=(arr,from)=>arr.map(t=>{const b=document.createElement("button");b.className="tile";b.textContent=t.w;b.onclick=()=>{if(from==="pool"){bPool=bPool.filter(x=>x!==t);bAns.push(t)}else{bAns=bAns.filter(x=>x!==t);bPool.push(t)}renderTiles()};return b});
+  $("#bans").replaceChildren(...mk(bAns,"ans"));$("#bpool").replaceChildren(...mk(bPool,"pool"));
+}
+$("#bcheck").onclick=()=>{
+  const s=B[bi][1],got=bAns.map(t=>t.w).join(" ");
+  if(bPool.length){$("#bfb").textContent="Use all the words first 🙂";$("#bfb").className="fb no";return}
+  if(got===s){$("#bfb").textContent="🌟 Perfect! +15 XP";$("#bfb").className="fb ok";addXP(15)}
+  else{$("#bfb").textContent="Almost! Correct: "+s;$("#bfb").className="fb no"}
+};
+$("#breset").onclick=()=>{bPool=bPool.concat(bAns);bAns=[];renderTiles()};
+$("#bnext").onclick=()=>{bi=(bi+1)%B.length;drawBuild()};
+drawBuild();
+
+/* ---------- SPEAK ---------- */
+const R=["The bookstore is on the second floor.","Please turn off your phone during class.","The bus to campus leaves every ten minutes.","Can you tell me where the science building is?","Our group meeting has moved to Thursday afternoon.","Remember to bring your student card to the exam.","The new café near the library serves great coffee.","Registration for next semester opens on Monday."];
+const I=["Do you prefer studying alone or with friends? Why?","Describe a teacher who helped you a lot.","What is the best way to learn a new language?","Should students have part-time jobs? Explain.","Tell me about a place in your city you love.","Is technology making people more or less social?","What skill would you like to learn next year, and why?","Do you like to plan everything, or be spontaneous?"];
+let ri=0,rShow=true,ii=Math.floor(Math.random()*I.length),tLeft=45,tId=null;
+function drawR(){$("#rtext").textContent=rShow?R[ri]:"• • •  text hidden  • • •"}
+$("#rplay").onclick=()=>{if(!say(R[ri])){rShow=true;drawR()}};
+$("#rshow").onclick=()=>{rShow=!rShow;$("#rshow").textContent=rShow?"Hide text":"Show text";drawR()};
+$("#rnext").onclick=()=>{addXP(5);ri=(ri+1)%R.length;drawR()};
+const fmt=n=>"0:"+String(n).padStart(2,"0");
+function drawI(){clearInterval(tId);tId=null;tLeft=45;$("#iq").textContent=I[ii];$("#itime").textContent=fmt(45);$("#istart").textContent="Start"}
+$("#istart").onclick=()=>{
+  if(tId){drawI();return}
+  say(I[ii]);$("#istart").textContent="Stop";
+  tId=setInterval(()=>{tLeft--;$("#itime").textContent=fmt(Math.max(tLeft,0));if(tLeft<=0){clearInterval(tId);tId=null;$("#itime").textContent="Done!";$("#istart").textContent="Again";addXP(20)}},1000);
+};
+$("#inext").onclick=()=>{ii=(ii+1)%I.length;drawI()};
+drawR();drawI();drawStats();
+</script>
+</body>
+</html>
